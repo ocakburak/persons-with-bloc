@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persons_with_bloc/cubit/person_register_cubit.dart';
+
 class PersonRegisterPage extends StatefulWidget {
   const PersonRegisterPage({super.key});
 
@@ -10,10 +13,6 @@ class PersonRegisterPage extends StatefulWidget {
 class _PersonRegisterPageState extends State<PersonRegisterPage> {
   var personName = TextEditingController();
   var personPhone = TextEditingController();
-
-  Future<void> register(String name, String phone) async {
-    print("register: $name - $phone");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +26,19 @@ class _PersonRegisterPageState extends State<PersonRegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextField(controller: personName, decoration: const InputDecoration(hintText: 'Person Name'),),
-              TextField(controller: personPhone, decoration: const InputDecoration(hintText: 'Person Phone'),),
+              TextField(
+                controller: personName,
+                decoration: const InputDecoration(hintText: 'Person Name'),
+              ),
+              TextField(
+                controller: personPhone,
+                decoration: const InputDecoration(hintText: 'Person Phone'),
+              ),
               ElevatedButton(
                 onPressed: () {
-                  register(personName.text, personPhone.text);
+                  context
+                      .read<PersonRegisterCubit>()
+                      .register(personName.text, personPhone.text);
                 },
                 child: const Text('Save'),
               ),

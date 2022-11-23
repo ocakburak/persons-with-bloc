@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:persons_with_bloc/entity/persons.dart';
+
+import '../cubit/person_detail_cubit.dart';
 
 class PersonDetailPage extends StatefulWidget {
   Persons person;
@@ -21,10 +24,6 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
     var person = widget.person;
     personName.text = person.person_name;
     personPhone.text = person.person_phone;
-  }
-
-  Future<void> update(int id, String name, String phone) async {
-    print("update: $id - $name - $phone");
   }
 
   @override
@@ -49,7 +48,9 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  update(widget.person.person_id, personName.text,
+                  context.read<PersonDetailCubit>().update(
+                      widget.person.person_id,
+                      personName.text,
                       personPhone.text);
                 },
                 child: const Text('Update'),
