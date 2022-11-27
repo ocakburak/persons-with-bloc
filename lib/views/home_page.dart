@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                         builder: (context) => PersonDetailPage(person: per),
                       ),
                     ).then((value) {
-                      print("back to home page");
+                      context.read<HomePageCubit>().showAllPerson();
                     });
                   },
                   child: Card(
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context) => const PersonRegisterPage(),
             ),
           ).then((value) {
-            print("back to home page");
+            context.read<HomePageCubit>().showAllPerson();
           });
         },
         child: const Icon(Icons.add),
